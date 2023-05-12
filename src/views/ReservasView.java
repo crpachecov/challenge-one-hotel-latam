@@ -19,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -44,8 +43,9 @@ public class ReservasView extends JFrame {
 	private JLabel labelAtras;
 	
 	private final Date currentDate = new Date();
-	private final double dailyValue = 10.0; 
 	private Calendar calendar = Calendar.getInstance();
+
+	private ReservasController reservasController;
 
 	/**
 	 * Launch the application.
@@ -68,6 +68,8 @@ public class ReservasView extends JFrame {
 	 */
 	public ReservasView() {
 		super("Reserva");
+		//Inicializamos el controlador
+		this.reservasController = new ReservasController();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -293,6 +295,7 @@ public class ReservasView extends JFrame {
 //				calendar.setTime(txtFechaEntrada.getDate());
 //				System.out.println("--------------------");
 //				System.out.println("Activo " + dailyValue);
+				txtValor.setText(String.valueOf(reservasController.calcularValorReserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate())));
 			}
 		});
 		

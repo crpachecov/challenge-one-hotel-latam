@@ -2,9 +2,11 @@ package controller;
 
 import dao.ReservasDAO;
 import factory.ConnectionFactory;
-import views.ReservasView;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class ReservasController {
 
@@ -16,12 +18,17 @@ public class ReservasController {
 		this.reservasDAO = new ReservasDAO(factory.recoverConnection());
 	}
 
-	public void getData() {
-		
-		System.out.println("date_entered " + simpleDateFormat.format(ReservasView.txtFechaEntrada.getDate()));
-		System.out.println("date_out " + simpleDateFormat.format(ReservasView.txtFechaSalida.getDate()));
-		System.out.println("method_payment " + ReservasView.txtFormaPago.getSelectedItem().toString());
 
+	public float calcularValorReserva(Date date_entered, Date date_out) {
+		LocalDate dateEntered;
+		LocalDate dateOut;
+		try {
+			dateEntered = date_entered.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			dateOut = date_out.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		}catch (Exception e){
+			throw new RuntimeException(e);
+		}
+
+		return this.reservasDAO.calcularValorReserva(dateEntered, dateOut);
 	}
-
 }

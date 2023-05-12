@@ -13,7 +13,7 @@ public class ConnectionFactory
     public ConnectionFactory() {
         //clase de c3p0
         var pooledDataSource = new ComboPooledDataSource();
-        pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/chotel_alura?useTimeZone=true&serverTimeZone=UTC");
+        pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/hotel_alura?useTimeZone=true&serverTimeZone=UTC");
         pooledDataSource.setUser("root");
         pooledDataSource.setPassword("Root:@X5RH9R");
 
