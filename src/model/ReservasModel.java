@@ -4,16 +4,16 @@ import java.sql.Date;
 
 public class ReservasModel {
     private Integer id;
-    private Date date_entered;
-    private Date date_out;
+    private Date dateEntered;
+    private Date dateOut;
     private float value;
-    private String method_payment;
+    private String methodPayment;
 
-    public ReservasModel(Date date_entered, Date date_out, float value, String method_payment) {
-        this.date_entered = date_entered;
-        this.date_out = date_out;
+    public ReservasModel(Date dateEntered, Date dateOut, float value, String methodPayment) {
+        this.dateEntered = dateEntered;
+        this.dateOut = dateOut;
         this.value = value;
-        this.method_payment = method_payment;
+        this.methodPayment = methodPayment;
     }
 
     public ReservasModel(){}
@@ -22,20 +22,20 @@ public class ReservasModel {
         return id;
     }
 
-    public Date getDate_entered() {
-        return date_entered;
+    public Date getDateEntered() {
+        return dateEntered;
     }
 
-    public void setDate_entered(Date date_entered) {
-        this.date_entered = date_entered;
+    public void setDateEntered(Date dateEntered) {
+        this.dateEntered = dateEntered;
     }
 
-    public Date getDate_out() {
-        return date_out;
+    public Date getDateOut() {
+        return dateOut;
     }
 
-    public void setDate_out(Date date_out) {
-        this.date_out = date_out;
+    public void setDateOut(Date dateOut) {
+        this.dateOut = dateOut;
     }
 
     public float getValue() {
@@ -46,11 +46,11 @@ public class ReservasModel {
         this.value = value;
     }
 
-    public String getMethod_payment() {
-        return method_payment;
+    public String getMethodPayment() {
+        return methodPayment;
     }
 
-    public void setMethod_payment(String method_payment) {
-        this.method_payment = method_payment;
+    public void setMethodPayment(String methodPayment) {
+        this.methodPayment = methodPayment;
     }
 }

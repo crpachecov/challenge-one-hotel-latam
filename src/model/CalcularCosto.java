@@ -18,7 +18,7 @@ public class CalcularCosto {
                 dias = Period.between(fechaInicio, fechaFin).getDays() + 1;
 
                 // Calcular el costo total
-                costoTotal = costoPorDia* dias;
+                costoTotal = costoPorDia * dias;
             }
 
             return costoTotal;

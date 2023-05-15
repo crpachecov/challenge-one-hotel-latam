@@ -12,12 +12,13 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
+import controller.HuespedController;
 import controller.ReservasController;
+import model.ReservasModel;
 
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -34,18 +35,19 @@ import javax.swing.border.LineBorder;
 public class ReservasView extends JFrame {
 
 	private JPanel contentPane;
-	public static JTextField txtValor;
+	public JTextField txtValor;
 	public static JDateChooser txtFechaEntrada;
 	public static JDateChooser txtFechaSalida;
-	public static JComboBox<String> txtFormaPago;
+	public JComboBox<String> txtFormaPago;
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	
 	private final Date currentDate = new Date();
-	private Calendar calendar = Calendar.getInstance();
-
+	private float valorReserva;
 	private ReservasController reservasController;
+
+	private HuespedController huespedController;
 
 	/**
 	 * Launch the application.
@@ -290,12 +292,9 @@ public class ReservasView extends JFrame {
 		
 		txtFechaSalida.addPropertyChangeListener("date", new PropertyChangeListener() { //Argumento "date" para que se ejecute cuando la fecha cambie
 			public void propertyChange(PropertyChangeEvent evt) {
-//				System.out.println(txtFechaEntrada.getDate());
-				//Activa el evento, después del usuario seleccionar las fechas se debe hacer el calculo el valor de la reserva
-//				calendar.setTime(txtFechaEntrada.getDate());
-//				System.out.println("--------------------");
-//				System.out.println("Activo " + dailyValue);
-				txtValor.setText(String.valueOf(reservasController.calcularValorReserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate())));
+				valorReserva = reservasController.calcularValorReserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+
+				txtValor.setText(String.valueOf(valorReserva));
 			}
 		});
 		
@@ -329,10 +328,13 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
-					
-//					new ReservasController().getData();
-					
-					RegistroHuesped registro = new RegistroHuesped();
+					java.sql.Date fechaEntrada = new java.sql.Date(txtFechaEntrada.getDate().getTime());
+					java.sql.Date fechaSalida = new java.sql.Date(txtFechaSalida.getDate().getTime());
+
+					var reserva = new ReservasModel(fechaEntrada, fechaSalida, valorReserva, txtFormaPago.getSelectedItem().toString());
+
+					RegistroHuesped registro = new RegistroHuesped(reservasController.guardarReserva(reserva));
+					JOptionPane.showMessageDialog(null, "Reserva guardada correctamente.");
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
